@@ -5,16 +5,17 @@ import java.util.Vector;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.ListSelectionModel;
 
-import Logica.Determinación_del_equilibrio;
-import Logica.Ecuación_de_estado_SRW_modificada;
 import Logica.Metodos_De_Caracterizacion;
 import Logica.Compuesto_Caracterizable;
 import Logica.Fracciones_No_Caracterizables;
@@ -61,6 +62,8 @@ public class Seudocompuestos extends JFrame {
 	private JButton Agregar;
 	private JComboBox jComboBox;
 	private JLabel jLabel4;
+	private JSeparator jSeparator2;
+	private JSeparator jSeparator1;
 	private JButton jButton2;
 	private JTextField jTextField3;
 	private JTextField jTextField2;
@@ -70,6 +73,7 @@ public class Seudocompuestos extends JFrame {
 	private JLabel jLabel1;
 	private DefaultTableModel model ;
 	private int cont =1;
+	private JLabel Logo;
 	static LinkedList<Fracciones_No_Caracterizables> lista_fracciones_no_caracterizables = new LinkedList<Fracciones_No_Caracterizables>();
 	public Seudocompuestos(final LinkedList<Compuesto_Caracterizable> lista_final_compuestos) {
 
@@ -87,7 +91,7 @@ public class Seudocompuestos extends JFrame {
 		{
 			JLabel lblSeleccioneLosComponentes = new JLabel("Ingrese los datos conocidos de la fracción Pesada");
 			lblSeleccioneLosComponentes.setFont(new Font("Tahoma", Font.BOLD, 20));
-			lblSeleccioneLosComponentes.setBounds(14, 140, 322, 28);
+			lblSeleccioneLosComponentes.setBounds(14, 168, 322, 28);
 			getContentPane().add(lblSeleccioneLosComponentes);
 			lblSeleccioneLosComponentes.setText("Ingrese los seudocompuestos:");
 		}
@@ -122,7 +126,27 @@ public class Seudocompuestos extends JFrame {
 
 
 			model = new DefaultTableModel();
-			table = new JTable();
+			table = new JTable(){
+				public boolean isCellEditable(int rowIndex, int colIndex) {
+				
+									
+					if (colIndex==1){
+						return true; 
+					}
+					
+					else if (colIndex==2){
+						return true; 
+					}
+					
+					else if (colIndex==3){
+						return true; 
+					}
+						
+					else {
+						return false; 
+					}
+			    }
+		};
 			table.setModel(model);
 			model.addColumn("Nombre");
 			model.addColumn("Masa molecular");
@@ -137,8 +161,7 @@ public class Seudocompuestos extends JFrame {
 			getContentPane().add(pane);
 			pane.setBounds(7, 301, 1162, 315);
 			getContentPane().add(pane);
-
-
+			pane.setBackground(new java.awt.Color(192,192,192));
 
 		}
 		{
@@ -282,7 +305,7 @@ public class Seudocompuestos extends JFrame {
 			estimar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					lista_fracciones_no_caracterizables=tabletolist();
-					System.out.println(lista_final_compuestos.get(0).getNombre());
+					
 					if (jComboBox.getSelectedItem().equals("Riazi-Daubert1")){
 						Metodos_De_Caracterizacion c = new Metodos_De_Caracterizacion() ;
 						lista_fracciones_no_caracterizables=c.RiaziDaubert1(lista_fracciones_no_caracterizables);
@@ -363,13 +386,30 @@ public class Seudocompuestos extends JFrame {
 			jButton2.setBounds(966, 644, 161, 28);
 			jButton2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
-					Float temperatura =(float) 0.0;
-					Float presion=(float) 0.0;
-					Float flujo_crudo_gas=(float) 0.0;
-						//new Ecuación_de_estado_SRW_modificada(lista_final_compuestos,lista_fracciones_no_caracterizables,temperatura,presion,flujo_crudo_gas);
-						new Determinación_del_equilibrio(lista_final_compuestos, lista_fracciones_no_caracterizables, temperatura, presion, flujo_crudo_gas);
+				
+					 new Caracterizacion_corriente(lista_final_compuestos,lista_fracciones_no_caracterizables);
+					 dispose();
 				}
 			});
+		}
+		{
+			jSeparator1 = new JSeparator();
+			getContentPane().add(jSeparator1);
+			jSeparator1.setBounds(0, 280, 1183, 28);
+		}
+		{
+			jSeparator2 = new JSeparator();
+			getContentPane().add(jSeparator2);
+			jSeparator2.setBounds(0, 630, 1183, 28);
+		}
+		{
+			Logo = new JLabel();
+			getContentPane().add(Logo);
+			Logo.setBounds(0, 21, 1183, 126);
+			Logo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Vista/logo.png")));
+			Logo.setBackground(new java.awt.Color(255,255,255));
+			Logo.setForeground(new java.awt.Color(255,255,255));
+			Logo.setOpaque(true);
 		}
 
 		this.repaint();

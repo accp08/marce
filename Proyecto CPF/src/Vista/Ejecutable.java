@@ -1,16 +1,15 @@
 package Vista;
 
-
-
-
 import java.util.LinkedList;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.ListSelectionModel;
 
 import Logica.Compuesto_Caracterizable;
@@ -48,6 +47,10 @@ import javax.swing.JMenuBar;
 public class Ejecutable extends JFrame {
 
 	public static LinkedList<Compuesto_Caracterizable> lista_de_compuestos= new LinkedList<Compuesto_Caracterizable>();
+	private JLabel Logo;
+	private JSeparator jSeparator3;
+	private JSeparator jSeparator2;
+	private JSeparator jSeparator1;
 	public static LinkedList<Compuesto_Caracterizable> lista_final_compuestos= new LinkedList<Compuesto_Caracterizable>();
 
 	public Ejecutable() {
@@ -74,7 +77,7 @@ public class Ejecutable extends JFrame {
 		{
 			JLabel lblSeleccioneLosComponentes = new JLabel("Seleccione los componentes que requiere su simulación");
 			lblSeleccioneLosComponentes.setFont(new Font("Tahoma", Font.BOLD, 20));
-			lblSeleccioneLosComponentes.setBounds(378, 140, 623, 28);
+			lblSeleccioneLosComponentes.setBounds(385, 182, 623, 28);
 			getContentPane().add(lblSeleccioneLosComponentes);
 		}
 
@@ -219,6 +222,30 @@ public class Ejecutable extends JFrame {
 			getContentPane().add(button_1);
 			button_1.setText("SIGUIENTE -->");
 
+		}
+		{
+			Logo = new JLabel();
+			getContentPane().add(Logo);
+			Logo.setBounds(0, 21, 1183, 126);
+			Logo.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Vista/logo.png")));
+			Logo.setBackground(new java.awt.Color(255,255,255));
+			Logo.setForeground(new java.awt.Color(255,255,255));
+			Logo.setOpaque(true);
+		}
+		{
+			jSeparator1 = new JSeparator();
+			getContentPane().add(jSeparator1);
+			jSeparator1.setBounds(0, 175, 1183, 28);
+		}
+		{
+			jSeparator2 = new JSeparator();
+			getContentPane().add(jSeparator2);
+			jSeparator2.setBounds(7, 546, 1183, 28);
+		}
+		{
+			jSeparator3 = new JSeparator();
+			getContentPane().add(jSeparator3);
+			jSeparator3.setBounds(0, 616, 1183, 28);
 		}
 
 		this.repaint();
