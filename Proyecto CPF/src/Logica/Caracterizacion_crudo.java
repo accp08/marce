@@ -5,15 +5,15 @@ import java.util.LinkedList;
 
 import javax.crypto.spec.PSource;
 
-import Logica.Compuesto_Caracterizable;
-import Logica.Propiedades_calculo_entalpia;
+import Logica.Objeto_Compuestos_Caracterizables;
+import Logica.Objeto_constante_calculo_entalpia;
 import Persistencia.Lectura_HC_Compuestos_Caracterizables;
 import Persistencia.Lectura_constantes_calculo_entalpias;
 
 public class Caracterizacion_crudo {
 
-	public static LinkedList<Compuesto_Caracterizable> lista_de_compuestos = new LinkedList<Compuesto_Caracterizable>();
-	public static LinkedList<Propiedades_calculo_entalpia> lista_constantes_calculo_entlpias = new LinkedList<Propiedades_calculo_entalpia>();
+	public static LinkedList<Objeto_Compuestos_Caracterizables> lista_de_compuestos = new LinkedList<Objeto_Compuestos_Caracterizables>();
+	public static LinkedList<Objeto_constante_calculo_entalpia> lista_constantes_calculo_entlpias = new LinkedList<Objeto_constante_calculo_entalpia>();
 
 	public static void main(String[] args) {
 		// TODO Auto-generated constructor stub
@@ -522,11 +522,11 @@ public class Caracterizacion_crudo {
 		System.out.println("Viscosidad_Vasquez_Beggs=	"+Viscosidad_Vasquez_Beggs);
 		System.out.println("Viscosidad a partir de la composición=	"+viscosidad);
 
-		new Mezcla_corriente_alimento_sin_agua(Temperatura_crudo,Presion_crudo,Flujo_de_crudo,Fraccion_molar_crudo_sin_agua,Densidad_crudo,Viscosidad_del_crudo,Calor_especifico_crudo,Gravedad_especifica,Grados_API);
 
 		//==================================================================================================================
 		//Debe generarse otra exportación como reporte de las condiciones de la corriente que sea visible al usuario 
 		//new Exportar_a_ventana(Temperatura_crudo,Presion_crudo,Flujo_de_crudo,Fraccion_molar_crudo_sin_agua,Densidad_crudo,Viscosidad_del_crudo,Calor_especifico,Gravedad_especifica,Grados_API, Fraccion_masica, );
+		//new Mezcla_corriente_alimento_sin_agua(Temperatura_crudo,Presion_crudo,Flujo_de_crudo,Fraccion_molar_crudo_sin_agua,Densidad_crudo,Viscosidad_del_crudo,Calor_especifico_crudo,Gravedad_especifica,Grados_API);
 		//==================================================================================================================
 
 	}

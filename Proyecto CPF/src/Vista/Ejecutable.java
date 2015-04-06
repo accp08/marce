@@ -12,7 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.ListSelectionModel;
 
-import Logica.Compuesto_Caracterizable;
+import Logica.Objeto_Compuestos_Caracterizables;
 import Persistencia.Lectura_HC_Compuestos_Caracterizables;
 
 import javax.swing.JLabel;
@@ -46,12 +46,12 @@ import javax.swing.JMenuBar;
  */
 public class Ejecutable extends JFrame {
 
-	public static LinkedList<Compuesto_Caracterizable> lista_de_compuestos= new LinkedList<Compuesto_Caracterizable>();
+	public static LinkedList<Objeto_Compuestos_Caracterizables> lista_de_compuestos= new LinkedList<Objeto_Compuestos_Caracterizables>();
 	private JLabel Logo;
 	private JSeparator jSeparator3;
 	private JSeparator jSeparator2;
 	private JSeparator jSeparator1;
-	public static LinkedList<Compuesto_Caracterizable> lista_final_compuestos= new LinkedList<Compuesto_Caracterizable>();
+	public static LinkedList<Objeto_Compuestos_Caracterizables> lista_final_compuestos= new LinkedList<Objeto_Compuestos_Caracterizables>();
 
 	public Ejecutable() {
 
@@ -261,7 +261,7 @@ public class Ejecutable extends JFrame {
 	//===============================
 
 	private DefaultListModel ingrese_nombres(
-			LinkedList<Compuesto_Caracterizable> lista_de_compuestos) {
+			LinkedList<Objeto_Compuestos_Caracterizables> lista_de_compuestos) {
 		DefaultListModel datos = new DefaultListModel();
 
 		for (int i = 0; i <lista_de_compuestos.size(); i++) {

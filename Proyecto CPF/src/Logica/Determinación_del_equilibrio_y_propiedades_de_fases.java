@@ -8,11 +8,11 @@ import java.util.LinkedList;
 
 import sun.security.util.DerInputStream;
 
-public class Determinación_del_equilibrio {
+public class Determinación_del_equilibrio_y_propiedades_de_fases {
 
-	public Determinación_del_equilibrio (
-			LinkedList<Compuesto_Caracterizable> lista_final_compuestos,
-			LinkedList<Fracciones_No_Caracterizables> lista_fracciones_no_caracterizables,
+	public Determinación_del_equilibrio_y_propiedades_de_fases (
+			LinkedList<Objeto_Compuestos_Caracterizables> lista_final_compuestos,
+			LinkedList<Objeto_fracciones_no_caracterizables> lista_fracciones_no_caracterizables,
 			Float temperatura, Float presion, Float flujo_crudo_gas) {
 		
 		

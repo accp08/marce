@@ -7,14 +7,14 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 
-public class Metodos_De_Caracterizacion {
+public class Modelos_caracterizacion_fraccion_pesada {
 
-	public Metodos_De_Caracterizacion(){
+	public Modelos_caracterizacion_fraccion_pesada(){
 
 	}
 
-	public static LinkedList<Fracciones_No_Caracterizables> RiaziDaubert1(
-			LinkedList<Fracciones_No_Caracterizables> lista_fracciones_no_caracterizables) {
+	public static LinkedList<Objeto_fracciones_no_caracterizables> RiaziDaubert1(
+			LinkedList<Objeto_fracciones_no_caracterizables> lista_fracciones_no_caracterizables) {
 
 
 		for (int i = 0; i < lista_fracciones_no_caracterizables.size(); i++) {
@@ -135,8 +135,8 @@ public class Metodos_De_Caracterizacion {
 		return lista_fracciones_no_caracterizables;
 	}
 
-	public LinkedList<Fracciones_No_Caracterizables> RiaziDaubert2(
-			LinkedList<Fracciones_No_Caracterizables> lista_fracciones_no_caracterizables) {
+	public LinkedList<Objeto_fracciones_no_caracterizables> RiaziDaubert2(
+			LinkedList<Objeto_fracciones_no_caracterizables> lista_fracciones_no_caracterizables) {
 		for (int i = 0; i < lista_fracciones_no_caracterizables.size(); i++) {
 			double Peso_Molecular = lista_fracciones_no_caracterizables.get(i).getMasa_molecular();
 			double Temperatura_media_de_ebullicion= 0;
@@ -255,8 +255,8 @@ public class Metodos_De_Caracterizacion {
 		return lista_fracciones_no_caracterizables;
 	}
 
-	public LinkedList<Fracciones_No_Caracterizables> LeeKesler(
-			LinkedList<Fracciones_No_Caracterizables> lista_fracciones_no_caracterizables) {
+	public LinkedList<Objeto_fracciones_no_caracterizables> LeeKesler(
+			LinkedList<Objeto_fracciones_no_caracterizables> lista_fracciones_no_caracterizables) {
 		for (int i = 0; i < lista_fracciones_no_caracterizables.size(); i++) {
 			double Peso_Molecular = (double)0;
 			double Temperatura_media_de_ebullicion= lista_fracciones_no_caracterizables.get(i).getPunto_de_ebullicion_estandar();
@@ -358,8 +358,8 @@ public class Metodos_De_Caracterizacion {
 		return lista_fracciones_no_caracterizables;
 	}
 
-	public LinkedList<Fracciones_No_Caracterizables> WinSimDaubert(
-			LinkedList<Fracciones_No_Caracterizables> lista_fracciones_no_caracterizables) {
+	public LinkedList<Objeto_fracciones_no_caracterizables> WinSimDaubert(
+			LinkedList<Objeto_fracciones_no_caracterizables> lista_fracciones_no_caracterizables) {
 		for (int i = 0; i < lista_fracciones_no_caracterizables.size(); i++) {
 			double Peso_Molecular = (double)0;
 			double Temperatura_media_de_ebullicion= lista_fracciones_no_caracterizables.get(i).getPunto_de_ebullicion_estandar();
@@ -430,8 +430,8 @@ public class Metodos_De_Caracterizacion {
 
 
 
-	public LinkedList<Fracciones_No_Caracterizables> WatansiriOwensStarling(
-			LinkedList<Fracciones_No_Caracterizables> lista_fracciones_no_caracterizables) {
+	public LinkedList<Objeto_fracciones_no_caracterizables> WatansiriOwensStarling(
+			LinkedList<Objeto_fracciones_no_caracterizables> lista_fracciones_no_caracterizables) {
 		for (int i = 0; i < lista_fracciones_no_caracterizables.size(); i++) {
 			double Peso_Molecular = lista_fracciones_no_caracterizables.get(i).getMasa_molecular();
 			double Temperatura_media_de_ebullicion= lista_fracciones_no_caracterizables.get(i).getPunto_de_ebullicion_estandar();

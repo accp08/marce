@@ -1,6 +1,6 @@
 package Logica;
 
-public class Compuesto_Caracterizable {
+public class Objeto_Compuestos_Caracterizables {
 
 	String nombre;
 	String formula;
@@ -87,7 +87,7 @@ public class Compuesto_Caracterizable {
 	public void setFraccion_molar_alimento(Double fraccion_molar_alimento) {
 		this.fraccion_molar_alimento = fraccion_molar_alimento;
 	}
-	public Compuesto_Caracterizable(String nombre, String formula,
+	public Objeto_Compuestos_Caracterizables(String nombre, String formula,
 			Double masa_molecular, Double punto_de_ebullicion_estandar,
 			Double densidad_Ideal_del_liquido, Double presion_de_Vapor,
 			Double temperatura_critica_Tc, Double presión_critica_Pc,
@@ -108,7 +108,7 @@ public class Compuesto_Caracterizable {
 		Factor_de_compresibilidad_critico_Zc = factor_de_compresibilidad_critico_Zc;
 		this.fraccion_molar_alimento = fraccion_molar_alimento;
 	}
-	public Compuesto_Caracterizable(String nombre, String formula,
+	public Objeto_Compuestos_Caracterizables(String nombre, String formula,
 			Double masa_molecular, Double punto_de_ebullicion_estandar,
 			Double densidad_Ideal_del_liquido, Double presion_de_Vapor,
 			Double temperatura_critica_Tc, Double presión_critica_Pc,

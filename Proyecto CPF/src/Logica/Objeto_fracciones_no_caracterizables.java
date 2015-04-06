@@ -1,6 +1,6 @@
 package Logica;
 
-public class Fracciones_No_Caracterizables {
+public class Objeto_fracciones_no_caracterizables {
 
 	String nombre;
 	Double masa_molecular;
@@ -12,7 +12,7 @@ public class Fracciones_No_Caracterizables {
 	Double factor_acentrico_w;
 	Double fraccion_molar_alimento;
 	
-	public Fracciones_No_Caracterizables(String nombre, Double masa_molecular,
+	public Objeto_fracciones_no_caracterizables(String nombre, Double masa_molecular,
 			Double punto_de_ebullicion_estandar, Double gravedad_especifica,
 			Double temperatura_critica_Tc, Double presión_critica_Pc,
 			Double volumen_critico_Vc, Double factor_acentrico_w) {
@@ -26,7 +26,7 @@ public class Fracciones_No_Caracterizables {
 		Volumen_critico_Vc = volumen_critico_Vc;
 		this.factor_acentrico_w = factor_acentrico_w;
 	}
-	public Fracciones_No_Caracterizables(String nombre, Double masa_molecular,
+	public Objeto_fracciones_no_caracterizables(String nombre, Double masa_molecular,
 			Double punto_de_ebullicion_estandar, Double gravedad_especifica,
 			Double temperatura_critica_Tc, Double presión_critica_Pc,
 			Double volumen_critico_Vc, Double factor_acentrico_w,
@@ -42,7 +42,7 @@ public class Fracciones_No_Caracterizables {
 		this.factor_acentrico_w = factor_acentrico_w;
 		this.fraccion_molar_alimento = fraccion_molar_alimento;
 	}
-	public Fracciones_No_Caracterizables() {
+	public Objeto_fracciones_no_caracterizables() {
 		// TODO Auto-generated constructor stub
 	}
 	public String getNombre() {

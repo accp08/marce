@@ -19,8 +19,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.SoftBevelBorder;
 
-import Logica.Compuesto_Caracterizable;
-import Logica.Fracciones_No_Caracterizables;
+import Logica.Objeto_Compuestos_Caracterizables;
+import Logica.Objeto_fracciones_no_caracterizables;
 import Persistencia.Lectura_HC_Compuestos_Caracterizables;
 import com.cloudgarden.layout.AnchorConstraint;
 import com.cloudgarden.layout.AnchorLayout;
@@ -59,7 +59,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Caracterizacion_corriente extends JFrame {
 
-	public static LinkedList<Compuesto_Caracterizable> lista_de_compuestos= new LinkedList<Compuesto_Caracterizable>();
+	public static LinkedList<Objeto_Compuestos_Caracterizables> lista_de_compuestos= new LinkedList<Objeto_Compuestos_Caracterizables>();
 	private JLabel Logo;
 	private JLabel jLabel2;
 	private JLabel jLabel3;
@@ -89,9 +89,9 @@ public class Caracterizacion_corriente extends JFrame {
 	private JTable table;
 	private DefaultTableModel model2;
 	private JTable table2;
-	public static LinkedList<Compuesto_Caracterizable> lista_final_compuestos= new LinkedList<Compuesto_Caracterizable>();
+	public static LinkedList<Objeto_Compuestos_Caracterizables> lista_final_compuestos= new LinkedList<Objeto_Compuestos_Caracterizables>();
 
-	public Caracterizacion_corriente(LinkedList<Compuesto_Caracterizable> lista_final_compuestos, LinkedList<Fracciones_No_Caracterizables> lista_fracciones_no_caracterizables) {
+	public Caracterizacion_corriente(LinkedList<Objeto_Compuestos_Caracterizables> lista_final_compuestos, LinkedList<Objeto_fracciones_no_caracterizables> lista_fracciones_no_caracterizables) {
 
 		//===============================
 		// Variables 

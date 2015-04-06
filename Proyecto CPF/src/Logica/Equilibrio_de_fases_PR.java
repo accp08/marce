@@ -1,4 +1,4 @@
-package Vista;
+package Logica;
 
 import java.io.ObjectInputStream.GetField;
 import java.sql.PseudoColumnUsage;
@@ -10,18 +10,18 @@ import javax.swing.ListSelectionModel;
 
 import com.sun.org.apache.bcel.internal.generic.FNEG;
 
-import Logica.Compuesto_Caracterizable;
+import Logica.Objeto_Compuestos_Caracterizables;
 import Persistencia.Lectura_HC_Compuestos_Caracterizables;
 import Persistencia.Lectura_constantes_calculo_entalpias;
-import Logica.Complejo;
-import Logica.Graeffe;
-import Logica.Propiedades_calculo_entalpia;
+import Logica.Calculo_de_raices_complejos;
+import Logica.Calculo_raices_metodo_Graeffe;
+import Logica.Objeto_constante_calculo_entalpia;
 
-public class Prueba_1 {
+public class Equilibrio_de_fases_PR {
 
-	public static LinkedList<Compuesto_Caracterizable> lista_de_compuestos= new LinkedList<Compuesto_Caracterizable>();
+	public static LinkedList<Objeto_Compuestos_Caracterizables> lista_de_compuestos= new LinkedList<Objeto_Compuestos_Caracterizables>();
 
-	public static LinkedList<Propiedades_calculo_entalpia> lista_constantes_calculo_entlpias= new LinkedList<Propiedades_calculo_entalpia>();
+	public static LinkedList<Objeto_constante_calculo_entalpia> lista_constantes_calculo_entlpias= new LinkedList<Objeto_constante_calculo_entalpia>();
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -691,7 +691,7 @@ public class Prueba_1 {
 			Parametro_A_iteracion=Parametro_A_liquido;
 			Parametro_B_iteracion=Parametro_B_liquido;
 			double [] Vector_coeficientes_L={1,(Parametro_B_iteracion-1),Parametro_A_iteracion-2*Parametro_B_iteracion-3*Math.pow(Parametro_B_iteracion, 2),-Parametro_A_iteracion*Parametro_B_iteracion+Math.pow(Parametro_B_iteracion,2)+Math.pow(Parametro_B_iteracion,3) };
-			Graeffe g_L=new Graeffe(Vector_coeficientes_L);
+			Calculo_raices_metodo_Graeffe g_L=new Calculo_raices_metodo_Graeffe(Vector_coeficientes_L);
 			Vector vec_L = g_L.mostrarRaices();
 			for (int i = 0; i < vec_L.size(); i++) {
 				//System.out.println(vec_L.get(i));
@@ -703,7 +703,7 @@ public class Prueba_1 {
 			Parametro_A_iteracion=Parametro_A_vapor;
 			Parametro_B_iteracion=Parametro_B_vapor;
 			double [] Vector_coeficientes_V={1,(Parametro_B_iteracion-1),Parametro_A_iteracion-2*Parametro_B_iteracion-3*Math.pow(Parametro_B_iteracion, 2),-Parametro_A_iteracion*Parametro_B_iteracion+Math.pow(Parametro_B_iteracion,2)+Math.pow(Parametro_B_iteracion,3) };
-			Graeffe g_V=new Graeffe(Vector_coeficientes_V);
+			Calculo_raices_metodo_Graeffe g_V=new Calculo_raices_metodo_Graeffe(Vector_coeficientes_V);
 			Vector vec_V = g_V.mostrarRaices();
 			Parametro_ZV=(Double) vec_V.get(vec_V.size()-1);
 

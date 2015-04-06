@@ -3,10 +3,10 @@ package Logica;
 import java.util.Collections;
 import java.util.Vector;
 
-public class Graeffe {
+public class Calculo_raices_metodo_Graeffe {
     public int n; 
     public double[] raicesReales;
-    public Complejo[] raicesComplejas=new Complejo[4]; 
+    public Calculo_de_raices_complejos[] raicesComplejas=new Calculo_de_raices_complejos[4]; 
     public int numReales; 
     public int numComplejas;
     private double[][] a;
@@ -16,7 +16,7 @@ public class Graeffe {
     private static final double CERO=0.0001;
     private double[] moduloComplejas=new double[2];
 
-    public Graeffe(double[] coef) {
+    public Calculo_raices_metodo_Graeffe(double[] coef) {
         n=coef.length-1; 
         raicesReales=new double[n]; 
         a= new double[MAX_ITER][n+1];
@@ -87,11 +87,11 @@ exterior:
         }
         return y;
     }
-    public Complejo valorPolinomio(Complejo x){
-        Complejo y=new Complejo();
+    public Calculo_de_raices_complejos valorPolinomio(Calculo_de_raices_complejos x){
+        Calculo_de_raices_complejos y=new Calculo_de_raices_complejos();
         for(int i=0; i<n+1; i++){
-            y=Complejo.suma(y, Complejo.producto(a[0][i], 
-               Complejo.potencia(x, (n-i))));
+            y=Calculo_de_raices_complejos.suma(y, Calculo_de_raices_complejos.producto(a[0][i], 
+               Calculo_de_raices_complejos.potencia(x, (n-i))));
         }
         return y;
     }
@@ -141,8 +141,8 @@ exterior:
         double u, v;
         u=-(a[0][1]+suma)/2;
         v=Math.sqrt(moduloComplejas[0]*moduloComplejas[0]-u*u);
-        raicesComplejas[0]=new Complejo(u, v);
-        raicesComplejas[1]=new Complejo(u, -v);
+        raicesComplejas[0]=new Calculo_de_raices_complejos(u, v);
+        raicesComplejas[1]=new Calculo_de_raices_complejos(u, -v);
     }
     private void dosRaicesComplejas(){
         double suma=0.0;
@@ -162,10 +162,10 @@ exterior:
         double u2=(-y*r2*r2+z)/(r1*r1-r2*r2);
         double v1=Math.sqrt(r1*r1-u1*u1);
         double v2=Math.sqrt(r2*r2-u2*u2);
-        raicesComplejas[0]=new Complejo(u1, v1);
-        raicesComplejas[1]=new Complejo(u1, -v1);
-        raicesComplejas[2]=new Complejo(u2, v2);
-        raicesComplejas[3]=new Complejo(u2, -v2);
+        raicesComplejas[0]=new Calculo_de_raices_complejos(u1, v1);
+        raicesComplejas[1]=new Calculo_de_raices_complejos(u1, -v1);
+        raicesComplejas[2]=new Calculo_de_raices_complejos(u2, v2);
+        raicesComplejas[3]=new Calculo_de_raices_complejos(u2, -v2);
     }
 
     private boolean cambiaSigno(int j){

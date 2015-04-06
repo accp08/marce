@@ -5,15 +5,15 @@ import java.util.LinkedList;
 
 import javax.crypto.spec.PSource;
 
-import Logica.Compuesto_Caracterizable;
-import Logica.Propiedades_calculo_entalpia;
+import Logica.Objeto_Compuestos_Caracterizables;
+import Logica.Objeto_constante_calculo_entalpia;
 import Persistencia.Lectura_HC_Compuestos_Caracterizables;
 import Persistencia.Lectura_constantes_calculo_entalpias;
 
 public class Caracterizacion_gas {
 
-	public static LinkedList<Compuesto_Caracterizable> lista_de_compuestos = new LinkedList<Compuesto_Caracterizable>();
-	public static LinkedList<Propiedades_calculo_entalpia> lista_constantes_calculo_entlpias = new LinkedList<Propiedades_calculo_entalpia>();
+	public static LinkedList<Objeto_Compuestos_Caracterizables> lista_de_compuestos = new LinkedList<Objeto_Compuestos_Caracterizables>();
+	public static LinkedList<Objeto_constante_calculo_entalpia> lista_constantes_calculo_entlpias = new LinkedList<Objeto_constante_calculo_entalpia>();
 
 	public static void main(String[] args) {
 		// TODO Auto-generated constructor stub

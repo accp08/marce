@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.LinkedList;
 
-import Logica.Compuesto_Caracterizable;
-import Logica.Propiedades_calculo_entalpia;
+import Logica.Objeto_Compuestos_Caracterizables;
+import Logica.Objeto_constante_calculo_entalpia;
 
 public class Lectura_HC_Compuestos_Caracterizables {
 
@@ -15,11 +15,11 @@ public class Lectura_HC_Compuestos_Caracterizables {
 	}
 
 
-	public static LinkedList<Compuesto_Caracterizable> carga(){
+	public static LinkedList<Objeto_Compuestos_Caracterizables> carga(){
 		File archivo = null;
 		FileReader fr = null;
 		BufferedReader br = null;
-		LinkedList<Compuesto_Caracterizable> lista_de_compuestos = new LinkedList<Compuesto_Caracterizable>();
+		LinkedList<Objeto_Compuestos_Caracterizables> lista_de_compuestos = new LinkedList<Objeto_Compuestos_Caracterizables>();
 		try {
 			// Apertura del fichero y creacion de BufferedReader para poder
 			// hacer una lectura comoda (disponer del metodo readLine()).
@@ -31,7 +31,7 @@ public class Lectura_HC_Compuestos_Caracterizables {
 			String linea;
 			while((linea=br.readLine())!=null){
 				String[] vec = linea.split("\t");
-				Compuesto_Caracterizable compuesto = new Compuesto_Caracterizable(vec[0], vec[1], Double.parseDouble(vec[2]), Double.parseDouble(vec[3]), Double.parseDouble(vec[4]), Double.parseDouble(vec[5]), Double.parseDouble(vec[6]), Double.parseDouble(vec[7]), Double.parseDouble(vec[8]),Double.parseDouble(vec[9]),Double.parseDouble(vec[10]));
+				Objeto_Compuestos_Caracterizables compuesto = new Objeto_Compuestos_Caracterizables(vec[0], vec[1], Double.parseDouble(vec[2]), Double.parseDouble(vec[3]), Double.parseDouble(vec[4]), Double.parseDouble(vec[5]), Double.parseDouble(vec[6]), Double.parseDouble(vec[7]), Double.parseDouble(vec[8]),Double.parseDouble(vec[9]),Double.parseDouble(vec[10]));
 				lista_de_compuestos.add(compuesto);
 			}
 

@@ -1,4 +1,4 @@
-package Vista;
+package Logica;
 
 import java.io.ObjectInputStream.GetField;
 import java.sql.PseudoColumnUsage;
@@ -11,12 +11,12 @@ import sun.security.action.GetBooleanAction;
 
 import com.sun.org.apache.bcel.internal.generic.FNEG;
 
-import Logica.Compuesto_Caracterizable;
+import Logica.Objeto_Compuestos_Caracterizables;
 import Persistencia.Lectura_HC_Compuestos_Caracterizables;
 import Persistencia.Lectura_constantes_calculo_entalpias;
-import Logica.Complejo;
-import Logica.Graeffe;
-import Logica.Propiedades_calculo_entalpia;
+import Logica.Calculo_de_raices_complejos;
+import Logica.Calculo_raices_metodo_Graeffe;
+import Logica.Objeto_constante_calculo_entalpia;
 
 import java.io.ObjectInputStream.GetField;
 import java.sql.PseudoColumnUsage;
@@ -27,39 +27,20 @@ import javax.swing.ListSelectionModel;
 
 import com.sun.org.apache.bcel.internal.generic.FNEG;
 
-import Logica.Compuesto_Caracterizable;
-import Logica.Graeffe;
+import Logica.Objeto_Compuestos_Caracterizables;
+import Logica.Calculo_raices_metodo_Graeffe;
 import Persistencia.Lectura_HC_Compuestos_Caracterizables;
 
-public class Equilibrio_fases {
+public class Equilibrio_de_fases_SRW {
 
-	public Double Flujo_alimento;
-	public Double Flujo_liquido;
-	public Double Flujo_vapor;
-	public Double Fraccion_molar_liquido;
-	public Double Fraccion_molar_vapor;
-	public double[] Composicion;
-	public double[] Composicion_molar_liquido;
-	public double[] Composicion_molar_vapor;
-
-	public Double Entalpia_masica_total_alimento;
-	public Double Entalpia_masica_total_vapor;
-	public  Double Entalpia_masica_total_liquido;
-	public Double Entalpia_masica_residual_alimento;
-	public Double Entalpia_masica_residual_vapor;
-	public Double Entalpia_masica_residual_liquido;
-
-
-	public static LinkedList<Compuesto_Caracterizable> lista_de_compuestos= new LinkedList<Compuesto_Caracterizable>();
-	public static LinkedList<Propiedades_calculo_entalpia> lista_constantes_calculo_entlpias= new LinkedList<Propiedades_calculo_entalpia>();
-
+	public static LinkedList<Objeto_Compuestos_Caracterizables> lista_de_compuestos= new LinkedList<Objeto_Compuestos_Caracterizables>();
+	public static LinkedList<Objeto_constante_calculo_entalpia> lista_constantes_calculo_entlpias= new LinkedList<Objeto_constante_calculo_entalpia>();
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
 		//Necesito tener definido los compuestos que ingresan al sistema de separación.
 		//Se va a generan una matriz de tamaño mXm donde m es el número de los compuestos.
-
 		//Cada tipo de parámetros se calculan de una manera diferente.
 		// La matriz de los parámertros de interacción binario tiene la diagonal igual a cero.
 		//El llenado de la matriz de hará por filas.
@@ -69,25 +50,21 @@ public class Equilibrio_fases {
 
 
 		//	1.1)	Variables del sistema; son ingresadas en la pantalla donde se piden los datos para el calculo de equilibrio
-		//Por el momento el fluo del alimento será molar.
 		lista_constantes_calculo_entlpias = Lectura_constantes_calculo_entalpias.carga();
 		lista_de_compuestos = Lectura_HC_Compuestos_Caracterizables.carga();
 		int numero_de_compuestos_no_caracterizables= (int)1;
-		Double Flujo_alimento=(double)1000;
-		Double Temperatura_alimento =(double)60+460;
-		Double Presion_alimento =(double)1000;
+		Double Temperatura_alimento =(double)460;
+		Double Presion_alimento =(double)14.7;
 		Double Composicion []= new Double [lista_de_compuestos.size()+numero_de_compuestos_no_caracterizables];
 
 		//	1.2)	Constante universal, parámetros de la ecuación elegida para el cálculo.
 
 		Double Constante_gas_ideal_R =(double)10.73;
 		//Constantes según la EOS seleccionada
-		Float Parametro_omega_a_SRW = (float)0.45724;
-		Float Parametro_omega_b_SRW= (float)0.07780;
+		Float Parametro_omega_a_SRW = (float)0.42747;
+		Float Parametro_omega_b_SRW= (float)0.08664;
 
 		//		1.3)	Inicialización de la temperatura y la presión incial de las corrientes de vapor y liquido 
-		Double Flujo_liquido=(double)0;
-		Double Flujo_vapor=(double)0;
 		Double Temperatura_liquido=Temperatura_alimento;
 		Double Temperatura_vapor =Temperatura_alimento;
 		Double Presion_liquido=Presion_alimento;
@@ -112,19 +89,13 @@ public class Equilibrio_fases {
 			Composicion[i]=(double)0;
 		}
 
-		Composicion[0]=0.284;
-		Composicion [1]=0.0716;
-		Composicion [2]=0.1048;
-		Composicion [3]=0.042;
-		Composicion [4]=0.042;
-		Composicion [5]=0.0191;
-		Composicion [6]=0.0191;
-		Composicion [7]=0.0405;
-		Composicion [22]=0.0164;
-		Composicion [24]=0.0008;
-		Composicion [27]=0.3597;
-
-
+		Composicion[0]=0.45;
+		Composicion[1]=0.05;
+		Composicion[2]=0.05;		
+		Composicion[4]=0.03;
+		Composicion[6]=0.01;
+		Composicion[7]=0.01;
+		Composicion[27]=0.4;
 
 
 		for (int i = 0; i < Composicion.length; i++) {
@@ -172,23 +143,23 @@ public class Equilibrio_fases {
 		}
 		//OJO!! ESTA MATRIZ SE DEBE LLENAR CON LOS DATOS PROVENIENTES DE LA CARACTERIZACIÓN DE LOS PSEUDOCOMPONENTES.
 		for (int i=0; i<numero_de_compuestos_no_caracterizables;i++){
-			T_criticas_no_caracterizables [i] =(double)939.68+460;
-			P_criticas_no_caracterizables [i]=(double)206.27;
-			V_criticos_no_caracterizables [i]=(double)16.4210;
-			Factor_acentrico_w_no_caracterizables [i] =(double)0.7339;
-			Peso_molecular_MW_no_caracterizables[i]=252;
+			T_criticas_no_caracterizables [i] =(double)1160;
+			P_criticas_no_caracterizables [i]=(double)285;
+			V_criticos_no_caracterizables [i]=(double)2.37073211055279;
+			Factor_acentrico_w_no_caracterizables [i] =(double)0.52;
+			Peso_molecular_MW_no_caracterizables[i]=215;
 		}
 
 		// 2.7)		Calculo de los parámetros a, b y m para compuestos caracterizables y no caracterizables.
 		for (int i=0; i<(lista_de_compuestos.size());i++){
 			Parametro_a_caracterizables [i]= Parametro_omega_a_SRW*Math.pow(Constante_gas_ideal_R,2)*Math.pow(T_criticas_caracterizables[i],2)/P_criticas_caracterizables[i];
 			Parametro_b_caracterizables [i]= Parametro_omega_b_SRW*Constante_gas_ideal_R*T_criticas_caracterizables[i]/P_criticas_caracterizables[i];
-			Parametro_m_caracterizables [i]=0.379642+1.48503*Factor_acentrico_w_caracterizables[i]-0.1644*Math.pow(Factor_acentrico_w_caracterizables[i],2)+0.016667*Math.pow(Factor_acentrico_w_caracterizables[i], 3);
+			Parametro_m_caracterizables [i]=(0.480+1.574*Factor_acentrico_w_caracterizables[i]-0.176*(float)(Math.pow(Factor_acentrico_w_caracterizables[i],2)));
 		}
 		for (int i=0; i<numero_de_compuestos_no_caracterizables;i++){
 			Parametro_a_no_caracterizables [i]= Parametro_omega_a_SRW*Math.pow(Constante_gas_ideal_R,2)*Math.pow(T_criticas_no_caracterizables[i],2)/P_criticas_no_caracterizables[i];
 			Parametro_b_no_caracterizables [i]= Parametro_omega_b_SRW*Constante_gas_ideal_R*T_criticas_no_caracterizables[i]/P_criticas_no_caracterizables[i];
-			Parametro_m_no_caracterizables [i]=0.379642+1.48503*Factor_acentrico_w_no_caracterizables[i]-0.1644*Math.pow(Factor_acentrico_w_no_caracterizables[i],2)+0.016667*Math.pow(Factor_acentrico_w_no_caracterizables[i], 3);
+			Parametro_m_no_caracterizables [i]=(0.480+1.574*Factor_acentrico_w_no_caracterizables[i]-0.176*(float)(Math.pow(Factor_acentrico_w_no_caracterizables[i],2)));
 		}
 
 		// 2.8)		Llenado de los vectores correspondientes a todos los compuestos. (caracterizables y no caracterizables).
@@ -355,6 +326,22 @@ public class Equilibrio_fases {
 		// 		3.6) 	Impresión de las propiedades del alimento
 		//System.out.println("Peso molecular del alimento: " + Peso_molecular_MW_alimento);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		// 3.5) 	Impresión de los parametros de caracterización de cada componente
 		for (int i = 0; i <numero_de_compuestos; i++) {
 			if (Composicion[i]!=0) {
@@ -365,10 +352,10 @@ public class Equilibrio_fases {
 				//System.out.println("parametro alfa del alimento= "+Parametro_alfa_alimento[i]);
 			}
 		}
-		//		System.out.println("parametro a alfa del alimento= "+ parametro_a_alfa_alimento);
-		//		System.out.println("parametro b del alimento= "+ parametro_b_alimento);
-		//		System.out.println(" parametro A del alimento= "+ Parametro_A_alimento);
-		//		System.out.println(" parametro B del alimento = "+ Parametro_B_alimento);
+		//System.out.println("parametro a alfa del alimento= "+ parametro_a_alfa_alimento);
+		//System.out.println("parametro b del alimento= "+ parametro_b_alimento);
+		//System.out.println(" parametro A del alimento= "+ Parametro_A_alimento);
+		//System.out.println(" parametro B del alimento = "+ Parametro_B_alimento);
 
 
 
@@ -392,43 +379,49 @@ public class Equilibrio_fases {
 		//	4.2) 	Calculo de las constantes de reparto aproximadas a partir de la ecuación de Wilson.
 		double constantes_Ki_iniciales []= new double[numero_de_compuestos];
 		for (int i = 0; i <numero_de_compuestos; i++) {
-			constantes_Ki_iniciales [i]=Presion_critica [i]*Math.exp(5.37*(1+Factor_acentrico_w[i])*(1-Temperatura_critica[i]/Temperatura_alimento))/Presion_alimento; 
+			constantes_Ki_iniciales [i]=Presion_critica [i]/Presion_alimento*Math.exp(5.37*(1+Factor_acentrico_w[i])*(1-Temperatura_critica[i]/Temperatura_alimento)); 
 		}
 
-		//	4.3) 	Definición de los criterios para iterar
+		//	4.3) 	Definición de los critrios pr la itercion
 		Double Validacion_de_las_constantes_de_reparto=(double)1000;
 		double tolerancia_Ki=(double)10;
-		Double Fraccion_molar_vapor=(double)0;
-		Double Fraccion_molar_liquido=(double)0;
-		Double Funcion_de_vapor=(double)0.1;
-		Double Funcion_de_vapor_derivada=(double)0;
-		double Coeficiente_de_fugacidad_liquido[] =new double[numero_de_compuestos];
-		double Coeficiente_de_fugacidad_vapor  []=new double[numero_de_compuestos];
-
 		while(tolerancia_Ki!=0){
-			//	4.4) 	Fracción de vapor en equilibrio
-			while (Math.abs(Funcion_de_vapor)>0.001){
-				Funcion_de_vapor=0.0;
-				Funcion_de_vapor_derivada=0.0;
-				for (int i = 0; i < numero_de_compuestos; i++) {
-					if (Composicion[i]!=0){
-						Funcion_de_vapor=Funcion_de_vapor+(Composicion[i]*(constantes_Ki_iniciales[i]-1))/((Fraccion_molar_vapor*(constantes_Ki_iniciales[i]-1))+1);	
-						Funcion_de_vapor_derivada=Funcion_de_vapor_derivada+(Composicion[i]*Math.pow((constantes_Ki_iniciales[i]-1),2))/(Math.pow(Fraccion_molar_vapor*(constantes_Ki_iniciales[i]-1)+1,2));	
-					}
-				}
-				Funcion_de_vapor_derivada=-Funcion_de_vapor_derivada;
-				Fraccion_molar_vapor=Fraccion_molar_vapor-Funcion_de_vapor/Funcion_de_vapor_derivada;
+
+			//	4.4) 	Determinación de la fracción de vapor en la alimentación y determinación de la función de vapor (la cual será cero cuando se encuentra la verdadera composición del vapor).
+			Double Fraccion_molar_vapor_inicial=(double)0;
+			Double Fraccion_molar_vapor=(double)0;
+			Double Funcion_de_vapor=(double)0;
+			Double Funcion_de_vapor_derivada=(double)0;
+			Double A=(double)0;
+			Double B=(double)0;
+			for (int i = 0; i <numero_de_compuestos; i++) {
+				A=A+Composicion[i]*(constantes_Ki_iniciales[i]-1);
+				B=B+Composicion[i]*(constantes_Ki_iniciales[i]-1)/constantes_Ki_iniciales[i];
+			}
+			Fraccion_molar_vapor_inicial=A/(A-B);
+			Fraccion_molar_vapor=Fraccion_molar_vapor_inicial;
+			for (int i = 0; i < numero_de_compuestos; i++) {
+				Funcion_de_vapor=Funcion_de_vapor+(Composicion[i]*(constantes_Ki_iniciales[i]-1))/((Fraccion_molar_vapor_inicial*(constantes_Ki_iniciales[i]-1))+1);	
 			}
 
-			if (Fraccion_molar_vapor<0){
-				Fraccion_molar_vapor=0.0;
-			}
-			if (Fraccion_molar_vapor>1) {
-				Fraccion_molar_vapor=1.0;
+			// 4.5) 	Calculo iterativo para determinar las composiciones del vapor en equilibrio
+			while (Math.abs(Funcion_de_vapor)>0.0009){
+				Fraccion_molar_vapor_inicial=Fraccion_molar_vapor;
+				// 4.5.1) 	Determinación de la función de vapor. la cual será cero cuando se encuentra la verdadera composición del vapor.
+				for (int i = 0; i < numero_de_compuestos; i++) {
+					Funcion_de_vapor=Funcion_de_vapor+(Composicion[i]*(constantes_Ki_iniciales[i]-1))/((Fraccion_molar_vapor_inicial*(constantes_Ki_iniciales[i]-1))+1);	
+				}
+				// 4.5.2) 	Derivda de la función de vapor.
+				for (int i = 0; i < numero_de_compuestos; i++) {
+					Funcion_de_vapor_derivada=Funcion_de_vapor_derivada-(Composicion[i]*Math.pow((constantes_Ki_iniciales[i]-1),2))/(Math.pow(Fraccion_molar_vapor_inicial*(constantes_Ki_iniciales[i]-1)+1,2));	
+				}
+				Fraccion_molar_vapor=Fraccion_molar_vapor_inicial-Funcion_de_vapor/Funcion_de_vapor_derivada;
 			}
 
 			// 4.6) 	Determinación de la fracción de líquido.
+			Double Fraccion_molar_liquido=(double)0;
 			Fraccion_molar_liquido=1-Fraccion_molar_vapor;
+
 			//4.7) Fracción molar de cada componete en la fase líquida y vapor.
 			for (int i = 0; i < numero_de_compuestos; i++) {
 				if (Composicion[i]!=0){
@@ -436,21 +429,27 @@ public class Equilibrio_fases {
 					Composicion_molar_vapor[i]=Composicion[i]*constantes_Ki_iniciales[i]/(Fraccion_molar_liquido+Fraccion_molar_vapor*constantes_Ki_iniciales[i]);
 				}
 			}
-
 			//4.8) 		Impresión de la fracción de vapor, fracción de líquido y composición de cda compuesto en cada fase
 			for (int i = 0; i < numero_de_compuestos; i++) {
 				if (Composicion[i]!=0){
 					//System.out.println("K_inicial "+i+ "  "+constantes_Ki_iniciales[i]);
 				}
 			}
-
+			//System.out.println("Fraccion_molar_vapor_inicial=	"+Fraccion_molar_vapor_inicial);
 			//System.out.println("Funcion_de_vapor=	"+Funcion_de_vapor);
 			//System.out.println("Fraccion_molar_liquido=	"+Fraccion_molar_liquido);
 			for (int i = 0; i < numero_de_compuestos; i++) {
 				if (Composicion[i]!=0){
-					//System.out.println(i+"  fraccion inicial=	"+Composicion[i]+"	frac. liquido =	 "+ Composicion_molar_liquido[i]+"	fracc. vapor = 	"+Composicion_molar_vapor[i] );
+					//System.out.println("fraccion inicial=	"+Composicion[i]+"	frac. liquido =	 "+ Composicion_molar_liquido[i]+"	fracc. vapor = 	"+Composicion_molar_vapor[i] );
 				}
 			}
+
+
+
+
+
+
+
 
 
 			//=============================================================================================================================================
@@ -573,9 +572,8 @@ public class Equilibrio_fases {
 			}
 			//System.out.println("parametro a alfa del liquido= "+ parametro_a_alfa_liquido);
 			//System.out.println("parametro b del liquido= "+ parametro_b_liquido);
-			//			System.out.println(" parametro A del liquido= "+ Parametro_A_liquido);
-			//			System.out.println(" parametro B del liquido = "+ Parametro_B_liquido);
-
+			//System.out.println(" parametro A del liquido= "+ Parametro_A_liquido);
+			//System.out.println(" parametro B del liquido = "+ Parametro_B_liquido);
 
 
 
@@ -587,6 +585,7 @@ public class Equilibrio_fases {
 
 			//=============================================================================================================================================
 			//   6) CALCULO DE LAS PROPIEDADES DE LA FASE VAPOR
+
 
 
 			double [] Parametro_alfa_vapor = new double [numero_de_compuestos];
@@ -695,17 +694,16 @@ public class Equilibrio_fases {
 			for (int i = 0; i <numero_de_compuestos; i++) {
 				if (Composicion_molar_vapor[i]!=0) {
 					//System.out.println("compuesto "+i+" :");
-					//System.out.println(i+"	Composición i= "+Composicion_molar_vapor[i]);
+					//System.out.println("Composición i= "+Composicion_molar_vapor[i]);
 					//System.out.println("T. reducida del vapor = "+Temperatura_reducida_vapor[i]);
 					//System.out.println("Presión reducida del vapor ="+ Presion_reducida_vapor[i]);
 					//System.out.println("parametro alfa del vapor= "+Parametro_alfa_vapor[i]);
 				}
 			}
-
 			//System.out.println("parametro a alfa del vapor= "+ parametro_a_alfa_vapor);
 			//System.out.println("parametro b del vapor= "+ parametro_b_vapor);
-			//			System.out.println(" parametro A del vapor= "+ Parametro_A_vapor);
-			//			System.out.println(" parametro B del vapor = "+ Parametro_B_vapor);
+			//System.out.println(" parametro A del vapor= "+ Parametro_A_vapor);
+			//System.out.println(" parametro B del vapor = "+ Parametro_B_vapor);
 
 
 
@@ -723,14 +721,11 @@ public class Equilibrio_fases {
 			Double Parametro_B_iteracion=(double)0;
 			Parametro_A_iteracion=Parametro_A_liquido;
 			Parametro_B_iteracion=Parametro_B_liquido;
-			double [] Vector_coeficientes_L={1,(Parametro_B_iteracion-1),(Parametro_A_iteracion-3*Parametro_B_iteracion*Parametro_B_iteracion-2*Parametro_B_iteracion),(-Parametro_A_iteracion*Parametro_B_iteracion+Math.pow(Parametro_B_iteracion,2)+Math.pow(Parametro_B_iteracion,3)) };
-			for (int i = 0; i < Vector_coeficientes_L.length; i++) {
-				//System.out.println(Vector_coeficientes_L[i]);
-			}
-			Graeffe g_L=new Graeffe(Vector_coeficientes_L);
+			double [] Vector_coeficientes_L={1,(Parametro_B_iteracion-1),Parametro_A_iteracion-2*Parametro_B_iteracion-3*Math.pow(Parametro_B_iteracion, 2),-Parametro_A_iteracion*Parametro_B_iteracion+Math.pow(Parametro_B_iteracion,2)+Math.pow(Parametro_B_iteracion,3) };
+			Calculo_raices_metodo_Graeffe g_L=new Calculo_raices_metodo_Graeffe(Vector_coeficientes_L);
 			Vector vec_L = g_L.mostrarRaices();
 			for (int i = 0; i < vec_L.size(); i++) {
-				//System.out.println(vec_L.get(i)+"  "+i);
+				//System.out.println(vec_L.get(i));
 			}
 			Parametro_ZL=(Double) vec_L.get(0);
 			//System.out.println(Parametro_ZL);
@@ -738,17 +733,14 @@ public class Equilibrio_fases {
 			// 7.2) 	Calculo de las raices de Z_ Para la fase vapor
 			Parametro_A_iteracion=Parametro_A_vapor;
 			Parametro_B_iteracion=Parametro_B_vapor;
-			double [] Vector_coeficientes_V={1,(Parametro_B_iteracion-1),(Parametro_A_iteracion-3*Parametro_B_iteracion*Parametro_B_iteracion-2*Parametro_B_iteracion),(-Parametro_A_iteracion*Parametro_B_iteracion+Math.pow(Parametro_B_iteracion,2)+Math.pow(Parametro_B_iteracion,3)) };
-
-			Graeffe g_V=new Graeffe(Vector_coeficientes_V);
+			double [] Vector_coeficientes_V={1,(Parametro_B_iteracion-1),Parametro_A_iteracion-2*Parametro_B_iteracion-3*Math.pow(Parametro_B_iteracion, 2),-Parametro_A_iteracion*Parametro_B_iteracion+Math.pow(Parametro_B_iteracion,2)+Math.pow(Parametro_B_iteracion,3) };
+			Calculo_raices_metodo_Graeffe g_V=new Calculo_raices_metodo_Graeffe(Vector_coeficientes_V);
 			Vector vec_V = g_V.mostrarRaices();
 			Parametro_ZV=(Double) vec_V.get(vec_V.size()-1);
 
-
-
 			// 	7.3) Impresion de los factores de compresibilidad de la fase líquida y la fase vapor
-			//System.out.println("Factor de compresibilidad del líquido: "+Parametro_ZL);
-			//System.out.println("Factor de compresibilidad del vapor: "+Parametro_ZV);
+			//			System.out.println("Factor de compresibilidad del líquido: "+Parametro_ZL);
+			//			System.out.println("Factor de compresibilidad del vapor: "+Parametro_ZV);
 
 
 
@@ -766,25 +758,24 @@ public class Equilibrio_fases {
 			// 8.1) 	Determinación de las funciones PSI para la fase líquida y la fase vapor
 			double Funcion_PSI_vapor[]=new double [numero_de_compuestos]; 
 			double Funcion_PSI_liquido[]=new double [numero_de_compuestos];
-			for (int i = 0; i <numero_de_compuestos; i++) {		
-				for (int j = 0; j <numero_de_compuestos; j++) {
-					//System.out.println(i +"  "+  j );
-					Funcion_PSI_liquido [i]=Funcion_PSI_liquido [i]+ Composicion_molar_liquido[j]*Math.pow((Parametro_a[i]*Parametro_a[j]*Parametro_alfa_liquido[i]*Parametro_alfa_liquido[j]),0.5)*(1-Parametros_de_interaccion_binarios_liquido[i][j]);
-					Funcion_PSI_vapor [i]=Funcion_PSI_vapor [i]+Composicion_molar_vapor[j]*Math.pow((Parametro_a[i]*Parametro_a[j]*Parametro_alfa_vapor[i]*Parametro_alfa_vapor[j]),0.5)*(1-Parametros_de_interaccion_binarios_vapor[i][j]);
-				}
-			}
-
-			for (int i = 0; i <numero_de_compuestos; i++) {	
-				if (Composicion[i]!=0) {
-					//System.out.println(Funcion_PSI_liquido [i]);
-					//System.out.println(Funcion_PSI_vapor [i]);
+			for (int i = 0; i <numero_de_compuestos; i++) {
+				if (Composicion[i]!=0){
+					for (int j = 0; j <numero_de_compuestos; j++) {
+						if (Composicion[j]!=0){
+							//System.out.println(i +"  "+  j );
+							Funcion_PSI_liquido [i]=Funcion_PSI_liquido [i]+ Composicion_molar_liquido[j]*Math.pow((Parametro_a[i]*Parametro_a[j]*Parametro_alfa_liquido[i]*Parametro_alfa_liquido[j]),0.5)*(1-Parametros_de_interaccion_binarios_liquido[i][j]);
+							Funcion_PSI_vapor [i]=Funcion_PSI_vapor [i]+Composicion_molar_vapor[j]*Math.pow((Parametro_a[i]*Parametro_a[j]*Parametro_alfa_vapor[i]*Parametro_alfa_vapor[j]),0.5)*(1-Parametros_de_interaccion_binarios_vapor[i][j]);
+						}
+					}
 				}
 			}
 
 			// 8.2) 	Calculo de coeficientes de fugacidad para la fase líquida y para la fase vapor.
+			double Coeficiente_de_fugacidad_liquido[] =new double[numero_de_compuestos];
+			double Coeficiente_de_fugacidad_vapor  []=new double[numero_de_compuestos];
 			for (int i = 0; i <numero_de_compuestos; i++) {
 				Coeficiente_de_fugacidad_liquido [i]=Math.exp(Parametro_b[i]*(Parametro_ZL-1)/parametro_b_liquido-Math.log(Parametro_ZL-Parametro_B_liquido)-Parametro_A_liquido/(2*Math.pow(2,0.5)*Parametro_B_liquido)*(2*Funcion_PSI_liquido[i]/parametro_a_alfa_liquido-(Parametro_b[i]/parametro_b_liquido))*(Math.log((Parametro_ZL+(1+Math.pow(2,0.5))*Parametro_B_liquido)/(Parametro_ZL+(1-Math.pow(2,0.5))*Parametro_B_liquido))));
-				Coeficiente_de_fugacidad_vapor [i]=Math.exp(Parametro_b[i]*(Parametro_ZV-1)/parametro_b_vapor-Math.log(Parametro_ZV-Parametro_B_vapor)-Parametro_A_vapor/(2*Math.pow(2,0.5)*Parametro_B_vapor)*(2*Funcion_PSI_vapor[i]/parametro_a_alfa_vapor-(Parametro_b[i]/parametro_b_vapor))*(Math.log((Parametro_ZV+(1+Math.pow(2,0.5))*Parametro_B_vapor)/(Parametro_ZV+(1-Math.pow(2,0.5))*Parametro_B_vapor))));
+				Coeficiente_de_fugacidad_vapor [i]=Math.exp(Parametro_b[i]*(Parametro_ZV-1)/parametro_b_vapor-Math.log(Parametro_ZL-Parametro_B_vapor)-Parametro_A_vapor/(2*Math.pow(2,0.5)*Parametro_B_vapor)*(2*Funcion_PSI_vapor[i]/parametro_a_alfa_vapor-(Parametro_b[i]/parametro_b_vapor))*(Math.log((Parametro_ZL+(1+Math.pow(2,0.5))*Parametro_B_vapor)/(Parametro_ZL+(1-Math.pow(2,0.5))*Parametro_B_vapor))));
 			}
 
 			// 8.3) 	Calculo de los coeficientes de reparto
@@ -828,12 +819,13 @@ public class Equilibrio_fases {
 					//System.out.println("coeficente de fugacidad del liquido:  "+Coeficiente_de_fugacidad_liquido [i] );
 				}
 			}
-			for (int i = 0; i <numero_de_compuestos; i++) {
-				if(Composicion[i]!=0){
-					//System.out.println("coeficente de fugacidad del vapor:  "+Coeficiente_de_fugacidad_vapor [i] );
-				}
-			}
 		}
+
+
+
+
+
+
 
 
 
@@ -842,7 +834,7 @@ public class Equilibrio_fases {
 
 
 
-		//9.1) 	Calculo de la sumatoria de las fracciones molares en cada fase
+		//9.1) 	Calculo de la sumatiora de las fracciones molares en cada fase
 		Double Suma_composicion_liquido=(double)0;
 		Double Suma_composicion_vapor=(double)0;
 		for (int i = 0; i < numero_de_compuestos; i++) {
@@ -858,17 +850,12 @@ public class Equilibrio_fases {
 
 		//9.3) 	Impresión de la fracción molar estandarizada
 		for (int i = 0; i < numero_de_compuestos; i++) {
-			if (Composicion_molar_vapor[i]!=0){
-				//System.out.println(Composicion_molar_liquido[i]);
-				//System.out.println(Composicion_molar_vapor[i]);
-			}
+			//System.out.println(Composicion_molar_liquido[i]);
+			//System.out.println(Composicion_molar_vapor[i]);
 		}
 
-		Flujo_liquido=Fraccion_molar_liquido*Flujo_alimento;
-		Flujo_vapor=Fraccion_molar_vapor*Flujo_alimento;
 
-//		System.out.println(Flujo_liquido+"Flujo molar liquido");
-//		System.out.println(Flujo_vapor+"Flujo molar vapor");
+
 
 
 
@@ -876,7 +863,7 @@ public class Equilibrio_fases {
 
 
 		//=============================================================================================================================================
-		// 10)PROPIEDADES DE LA FASE LÍQUIDA Y DE LA FASE VAPOR. (densidad= lb/ft^3 ; Peso molecular=lb/lbmol)
+		// 10)PROPIEDADES DE LA FASE LÍQUIDA Y DE LA FASE VAPOR
 
 
 		// 10.1) 	Propiedades de la fase líquida.
@@ -907,12 +894,10 @@ public class Equilibrio_fases {
 			}
 		}
 
-//		System.out.println("Densidad del líquido: " +Densidad_liquido+ "    lb/ft^3");
-//		System.out.println("Peso molecular del líquido: " + Peso_molecular_MW_liquido+ "    lb/mol");
-//		System.out.println("Densidad del vapor: " +Densidad_vapor+ "    lb/ft^3");
-//		System.out.println("Peso molecular del vapor: " + Peso_molecular_MW_vapor+ "    lb/mol");
-
-
+		//		System.out.println("Densidad del líquido: " +Densidad_liquido);
+		//		System.out.println("Peso molecular del líquido: " + Peso_molecular_MW_liquido);
+		//		System.out.println("Densidad del vapor: " +Densidad_vapor);
+		//		System.out.println("Peso molecular del vapor: " + Peso_molecular_MW_vapor);
 
 
 
@@ -941,20 +926,24 @@ public class Equilibrio_fases {
 		double[]Entalpia_molar_compuestos_liquido=new double [numero_de_compuestos];
 		double[] Entalpia_molar_compuestos_vapor=new double [numero_de_compuestos];
 
-		// 	11.1) Entalpias molares ideales. (BTU/lbmol)
-		// 11.1.1) 	Entalpias molares ideles de los compuestos caracterizables. (BTU/lbmol)
+
+		Double  Temperatura_Kelvin_alimento=(double)(5*(Temperatura_alimento-460-32)/9+273.15);
+		Double Temperatura_Kelvin_liquido=(double)(5*(Temperatura_liquido-460-32)/9+273.15);
+		Double Temperatura_Kelvin_vapor=(double)(5*(Temperatura_vapor-460-32)/9+273.15);
+
+		// 	11.1) Entalpias molares ideales.
+		// 11.1.1) 	Entalpias molres ideles de los compuestos caracterizables.
 		for (int i = 0; i < lista_de_compuestos.size(); i++) {
 			Entalpia_molar_compuestos_alimento[i]=(lista_constantes_calculo_entlpias.get(i).getConstante_A_entalpia()+lista_constantes_calculo_entlpias.get(i).getConstante_B_entalpia()*(5*(Temperatura_alimento-460-32)/9+273.15)+lista_constantes_calculo_entlpias.get(i).getConstante_C_entalpia()*Math.pow((5*(Temperatura_alimento-460-32)/9+273.15), 2)+lista_constantes_calculo_entlpias.get(i).getConstante_D_entalpia()*Math.pow((5*(Temperatura_alimento-460-32)/9+273.15),3)+lista_constantes_calculo_entlpias.get(i).getConstante_E_entalpia()*Math.pow((5*(Temperatura_alimento-460-32)/9+273.15),4)+lista_constantes_calculo_entlpias.get(i).getConstante_F_entalpia()*Math.pow((5*(Temperatura_alimento-460-32)/9+273.15), 5))*Peso_molecular_MW_caracterizables[i]*0.94781712/2.20462262185;
 			Entalpia_molar_compuestos_liquido[i]=(lista_constantes_calculo_entlpias.get(i).getConstante_A_entalpia()+lista_constantes_calculo_entlpias.get(i).getConstante_B_entalpia()*(5*(Temperatura_liquido-460-32)/9+273.15)+lista_constantes_calculo_entlpias.get(i).getConstante_C_entalpia()*Math.pow((5*(Temperatura_liquido-460-32)/9+273.15), 2)+lista_constantes_calculo_entlpias.get(i).getConstante_D_entalpia()*Math.pow((5*(Temperatura_liquido-460-32)/9+273.15),3)+lista_constantes_calculo_entlpias.get(i).getConstante_E_entalpia()*Math.pow((5*(Temperatura_liquido-460-32)/9+273.15),4)+lista_constantes_calculo_entlpias.get(i).getConstante_F_entalpia()*Math.pow((5*(Temperatura_liquido-460-32)/9+273.15), 5))*Peso_molecular_MW_caracterizables[i]*0.94781712/2.20462262185;
 			Entalpia_molar_compuestos_vapor[i]=(lista_constantes_calculo_entlpias.get(i).getConstante_A_entalpia()+lista_constantes_calculo_entlpias.get(i).getConstante_B_entalpia()*(5*(Temperatura_vapor-460-32)/9+273.15)+lista_constantes_calculo_entlpias.get(i).getConstante_C_entalpia()*Math.pow((5*(Temperatura_vapor-460-32)/9+273.15), 2)+lista_constantes_calculo_entlpias.get(i).getConstante_D_entalpia()*Math.pow((5*(Temperatura_vapor-460-32)/9+273.15),3)+lista_constantes_calculo_entlpias.get(i).getConstante_E_entalpia()*Math.pow((5*(Temperatura_vapor-460-32)/9+273.15),4)+lista_constantes_calculo_entlpias.get(i).getConstante_F_entalpia()*Math.pow((5*(Temperatura_vapor-460-32)/9+273.15), 5))*Peso_molecular_MW_caracterizables[i]*0.94781712/2.20462262185;
 		}
 
-
 		// 11.1.2) 	Entalpias molares ideles de los compuestos no caracterizables.
 		for (int i = lista_de_compuestos.size(); i <numero_de_compuestos; i++) {
-			Entalpia_molar_compuestos_alimento[i]=((100*Peso_molecular_MW_no_caracterizables[i-lista_de_compuestos.size()]+800)+(32.15+Peso_molecular_MW_no_caracterizables[i-lista_de_compuestos.size()]+186.5)*((5*(Temperatura_alimento-460-32)/9+273.15)/100)+(3.708*Peso_molecular_MW_no_caracterizables[i-lista_constantes_calculo_entlpias.size()]-26.42)*Math.pow((5*(Temperatura_alimento-460-32)/9+273.15)/100, 2)+(-0.0859*Peso_molecular_MW_no_caracterizables[i-lista_de_compuestos.size()]+0.4)*Math.pow((5*(Temperatura_alimento-460-32)/9+273.15)/100, 3));
-			Entalpia_molar_compuestos_liquido[i]=((100*Peso_molecular_MW_no_caracterizables[i-lista_de_compuestos.size()]+800)+(32.15+Peso_molecular_MW_no_caracterizables[i-lista_de_compuestos.size()]+186.5)*((5*(Temperatura_liquido-460-32)/9+273.15)/100)+(3.708*Peso_molecular_MW_no_caracterizables[i-lista_constantes_calculo_entlpias.size()]-26.42)*Math.pow((5*(Temperatura_liquido-460-32)/9+273.15)/100, 2)+(-0.0859*Peso_molecular_MW_no_caracterizables[i-lista_de_compuestos.size()]+0.4)*Math.pow((5*(Temperatura_liquido-460-32)/9+273.15)/100, 3));
-			Entalpia_molar_compuestos_vapor[i]=((100*Peso_molecular_MW_no_caracterizables[i-lista_de_compuestos.size()]+800)+(32.15+Peso_molecular_MW_no_caracterizables[i-lista_de_compuestos.size()]+186.5)*((5*(Temperatura_vapor-460-32)/9+273.15)/100)+(3.708*Peso_molecular_MW_no_caracterizables[i-lista_constantes_calculo_entlpias.size()]-26.42)*Math.pow((5*(Temperatura_vapor-460-32)/9+273.15)/100, 2)+(-0.0859*Peso_molecular_MW_no_caracterizables[i-lista_de_compuestos.size()]+0.4)*Math.pow((5*(Temperatura_vapor-460-32)/9+273.15)/100, 3));
+			Entalpia_molar_compuestos_alimento[i]=((100*Peso_molecular_MW_no_caracterizables[i-lista_de_compuestos.size()]+800)+(32.15+Peso_molecular_MW_no_caracterizables[i-lista_de_compuestos.size()]+186.5)*(Temperatura_Kelvin_alimento/100)+(3.708*Peso_molecular_MW_no_caracterizables[i-lista_constantes_calculo_entlpias.size()]-26.42)*Math.pow(Temperatura_Kelvin_alimento/100, 2)+(-0.0859*Peso_molecular_MW_no_caracterizables[i-lista_de_compuestos.size()]+0.4)*Math.pow(Temperatura_Kelvin_alimento/100, 3));
+			Entalpia_molar_compuestos_liquido[i]=((100*Peso_molecular_MW_no_caracterizables[i-lista_de_compuestos.size()]+800)+(32.15+Peso_molecular_MW_no_caracterizables[i-lista_de_compuestos.size()]+186.5)*(Temperatura_Kelvin_liquido/100)+(3.708*Peso_molecular_MW_no_caracterizables[i-lista_constantes_calculo_entlpias.size()]-26.42)*Math.pow(Temperatura_Kelvin_liquido/100, 2)+(-0.0859*Peso_molecular_MW_no_caracterizables[i-lista_de_compuestos.size()]+0.4)*Math.pow(Temperatura_Kelvin_liquido/100, 3));
+			Entalpia_molar_compuestos_vapor[i]=((100*Peso_molecular_MW_no_caracterizables[i-lista_de_compuestos.size()]+800)+(32.15+Peso_molecular_MW_no_caracterizables[i-lista_de_compuestos.size()]+186.5)*(Temperatura_Kelvin_vapor/100)+(3.708*Peso_molecular_MW_no_caracterizables[i-lista_constantes_calculo_entlpias.size()]-26.42)*Math.pow(Temperatura_Kelvin_vapor/100, 2)+(-0.0859*Peso_molecular_MW_no_caracterizables[i-lista_de_compuestos.size()]+0.4)*Math.pow(Temperatura_Kelvin_vapor/100, 3));
 		}
 
 		// 11.1.3) 	Entalpias molres ideles de cada corriente de proceso.
@@ -1280,9 +1269,9 @@ public class Equilibrio_fases {
 		Entalpia_masica_residual_liquido=Constante_gas_ideal_R*Temperatura_Critica_Tc_mezcla_liquido*Entalpia_residual_liquido/Peso_molecular_MW_liquido;
 
 		// 11.6.7)	Impresión de las entalpías residuales másicas 
-		//		System.out.println("Entalpia_masica_residual_alimento"+Entalpia_masica_residual_alimento);
-		//		System.out.println("Entalpia_masica_residual_vapor"+Entalpia_masica_residual_vapor);
-		//		System.out.println("Entalpia_masica_residual_liquido"+Entalpia_masica_residual_liquido);
+		System.out.println("Entalpia_masica_residual_alimento"+Entalpia_masica_residual_alimento);
+		System.out.println("Entalpia_masica_residual_vapor"+Entalpia_masica_residual_vapor);
+		System.out.println("Entalpia_masica_residual_liquido"+Entalpia_masica_residual_liquido);
 
 		// 11.6.7)	Impresión de las entalpías residuales másicas 
 		Double Entalpia_masica_total_alimento=(double)0;
@@ -1293,20 +1282,24 @@ public class Equilibrio_fases {
 		Entalpia_masica_total_liquido=Entalpia_masica_liquido+Entalpia_masica_residual_liquido;
 
 		// 11.6.7)	Impresión de las entalpías residuales totales
-		//System.out.println("Entalpia_masica_total_alimento"+Entalpia_masica_total_alimento+ "   BTU/lbmasa");
-		//				System.out.println("Entalpia_masica_total_vapor"+Entalpia_masica_total_vapor);
-		//				System.out.println("Entalpia_masica_total_liquido"+Entalpia_masica_total_liquido);
+		System.out.println("Entalpia_masica_total_alimento"+Entalpia_masica_total_alimento);
+		System.out.println("Entalpia_masica_total_vapor"+Entalpia_masica_total_vapor);
+		System.out.println("Entalpia_masica_total_liquido"+Entalpia_masica_total_liquido);
 
 		// 11.6.7)	Impresión de las entalpía ideal
-		// System.out.println("Entalpia_masica_ideal_alimento"+Entalpia_masica_alimento+ "   BTU/lbmasa");
-		//		System.out.println("Entalpia_masica_ideal_vapor"+Entalpia_masica_vapor);
-		//		System.out.println("Entalpia_masica_ideal_liquido"+Entalpia_masica_liquido);
-		// System.out.println("Entalpía másica resudial del alimento"+Entalpia_masica_residual_alimento);
-		//System.out.println("Peso molecular alimento "+ Peso_molecular_MW_alimento+ "   lbmasa/lbmol");
+		System.out.println("Entalpia_masica_ideal_alimento"+Entalpia_masica_alimento);
+		System.out.println("Entalpia_masica_ideal_vapor"+Entalpia_masica_vapor);
+		System.out.println("Entalpia_masica_ideal_liquido"+Entalpia_masica_liquido);
+
+		for (int i = 0; i < numero_de_compuestos; i++) {
+			if (Composicion[i]!=0){
+			System.out.println(Composicion[i]);
+			}
+		}
 
 	}
-}
 
+}
 
 
 

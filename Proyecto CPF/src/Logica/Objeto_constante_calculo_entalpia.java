@@ -1,6 +1,6 @@
 package Logica;
 
-public class Propiedades_calculo_entalpia {
+public class Objeto_constante_calculo_entalpia {
 
 	String nombre;
 	Double Constante_A_entalpia;
@@ -10,7 +10,7 @@ public class Propiedades_calculo_entalpia {
 	Double Constante_E_entalpia;
 	Double Constante_F_entalpia;
 	
-	public Propiedades_calculo_entalpia(String nombre,
+	public Objeto_constante_calculo_entalpia(String nombre,
 			Double constante_A_entalpia, Double constante_B_entalpia,
 			Double constante_C_entalpia, Double constante_D_entalpia,
 			Double constante_E_entalpia, Double constante_F_entalpia) {

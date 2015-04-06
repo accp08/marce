@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import Logica.Compuesto_Caracterizable;
+import Logica.Objeto_Compuestos_Caracterizables;
 import Persistencia.Lectura_HC_Compuestos_Caracterizables;
 
 import javax.swing.JLabel;

@@ -16,9 +16,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.ListSelectionModel;
 
-import Logica.Metodos_De_Caracterizacion;
-import Logica.Compuesto_Caracterizable;
-import Logica.Fracciones_No_Caracterizables;
+import Logica.Modelos_caracterizacion_fraccion_pesada;
+import Logica.Objeto_Compuestos_Caracterizables;
+import Logica.Objeto_fracciones_no_caracterizables;
 import Persistencia.Lectura_HC_Compuestos_Caracterizables;
 
 import javax.swing.JLabel;
@@ -74,8 +74,8 @@ public class Seudocompuestos extends JFrame {
 	private DefaultTableModel model ;
 	private int cont =1;
 	private JLabel Logo;
-	static LinkedList<Fracciones_No_Caracterizables> lista_fracciones_no_caracterizables = new LinkedList<Fracciones_No_Caracterizables>();
-	public Seudocompuestos(final LinkedList<Compuesto_Caracterizable> lista_final_compuestos) {
+	static LinkedList<Objeto_fracciones_no_caracterizables> lista_fracciones_no_caracterizables = new LinkedList<Objeto_fracciones_no_caracterizables>();
+	public Seudocompuestos(final LinkedList<Objeto_Compuestos_Caracterizables> lista_final_compuestos) {
 
 		//===============================
 		// Variables 
@@ -233,7 +233,7 @@ public class Seudocompuestos extends JFrame {
 			Agregar.setBounds(441, 238, 294, 28);
 			Agregar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
-					Fracciones_No_Caracterizables f = new Fracciones_No_Caracterizables();
+					Objeto_fracciones_no_caracterizables f = new Objeto_fracciones_no_caracterizables();
 					if ((!jTextField1.getText().equals("")&&!jTextField2.getText().equals("")&&!jTextField3.getText().equals(""))
 							|| (!jTextField1.getText().equals("")&&!jTextField2.getText().equals(""))
 							|| (!jTextField1.getText().equals("")&&!jTextField3.getText().equals(""))
@@ -291,7 +291,7 @@ public class Seudocompuestos extends JFrame {
 					for( int i = model.getRowCount() - 1; i >= 0; i-- ) {
 						model.removeRow(i);
 					}
-					lista_fracciones_no_caracterizables = new LinkedList<Fracciones_No_Caracterizables>();
+					lista_fracciones_no_caracterizables = new LinkedList<Objeto_fracciones_no_caracterizables>();
 					cont=1;
 				}
 			});
@@ -307,12 +307,12 @@ public class Seudocompuestos extends JFrame {
 					lista_fracciones_no_caracterizables=tabletolist();
 					
 					if (jComboBox.getSelectedItem().equals("Riazi-Daubert1")){
-						Metodos_De_Caracterizacion c = new Metodos_De_Caracterizacion() ;
+						Modelos_caracterizacion_fraccion_pesada c = new Modelos_caracterizacion_fraccion_pesada() ;
 						lista_fracciones_no_caracterizables=c.RiaziDaubert1(lista_fracciones_no_caracterizables);
 						generarnuevatabla(lista_fracciones_no_caracterizables);
 					}
 					else if (jComboBox.getSelectedItem().equals("Riazi-Daubert2")){
-						Metodos_De_Caracterizacion c = new Metodos_De_Caracterizacion() ;
+						Modelos_caracterizacion_fraccion_pesada c = new Modelos_caracterizacion_fraccion_pesada() ;
 						lista_fracciones_no_caracterizables=c.RiaziDaubert2(lista_fracciones_no_caracterizables);
 						generarnuevatabla(lista_fracciones_no_caracterizables);
 
@@ -320,20 +320,20 @@ public class Seudocompuestos extends JFrame {
 					}
 					
 					else if (jComboBox.getSelectedItem().equals("Lee-Kesler")){
-						Metodos_De_Caracterizacion c = new Metodos_De_Caracterizacion() ;
+						Modelos_caracterizacion_fraccion_pesada c = new Modelos_caracterizacion_fraccion_pesada() ;
 						lista_fracciones_no_caracterizables=c.LeeKesler(lista_fracciones_no_caracterizables);
 						generarnuevatabla(lista_fracciones_no_caracterizables);
 
 
 					}
 					else if (jComboBox.getSelectedItem().equals("Winn-Sim-Daubert")){
-						Metodos_De_Caracterizacion c = new Metodos_De_Caracterizacion() ;
+						Modelos_caracterizacion_fraccion_pesada c = new Modelos_caracterizacion_fraccion_pesada() ;
 						lista_fracciones_no_caracterizables=c.WinSimDaubert(lista_fracciones_no_caracterizables);
 						generarnuevatabla(lista_fracciones_no_caracterizables);
 
 					}
 					else if (jComboBox.getSelectedItem().equals("Watansiri-Owens-Starling")){
-						Metodos_De_Caracterizacion c = new Metodos_De_Caracterizacion() ;
+						Modelos_caracterizacion_fraccion_pesada c = new Modelos_caracterizacion_fraccion_pesada() ;
 						lista_fracciones_no_caracterizables=c.WatansiriOwensStarling(lista_fracciones_no_caracterizables);
 						generarnuevatabla(lista_fracciones_no_caracterizables);
 
@@ -346,11 +346,11 @@ public class Seudocompuestos extends JFrame {
 
 				}
 
-				private LinkedList<Fracciones_No_Caracterizables> tabletolist() {
-					LinkedList<Fracciones_No_Caracterizables> list = new LinkedList<Fracciones_No_Caracterizables>();
+				private LinkedList<Objeto_fracciones_no_caracterizables> tabletolist() {
+					LinkedList<Objeto_fracciones_no_caracterizables> list = new LinkedList<Objeto_fracciones_no_caracterizables>();
 					
 					for (int i = 0; i < model.getRowCount(); i++) {
-						Fracciones_No_Caracterizables f = new Fracciones_No_Caracterizables();
+						Objeto_fracciones_no_caracterizables f = new Objeto_fracciones_no_caracterizables();
 						for (int j = 0; j < 4; j++) {
 							String celda =model.getValueAt(i, j).toString();
 							
@@ -427,7 +427,7 @@ public class Seudocompuestos extends JFrame {
 
 
 	protected void generarnuevatabla(
-			LinkedList<Fracciones_No_Caracterizables> lista_fracciones_no_caracterizables2) {
+			LinkedList<Objeto_fracciones_no_caracterizables> lista_fracciones_no_caracterizables2) {
 		Vector row = new Vector();
 
 		for( int i = model.getRowCount() - 1; i >= 0; i-- ) {
