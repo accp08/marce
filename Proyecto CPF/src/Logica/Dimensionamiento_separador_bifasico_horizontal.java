@@ -1,15 +1,12 @@
-
 package Logica;
 
 import javax.swing.JOptionPane;
 
-public class Separador_bifasico_horizontal {
-	public Separador_bifasico_horizontal() {
-		// TODO Auto-generated constructor stub
-	}
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
+public class Dimensionamiento_separador_bifasico_horizontal {
+
+
+	public static void main(String[] args) {
 
 		//Variables de ingreso al sistema:
 
@@ -24,14 +21,20 @@ public class Separador_bifasico_horizontal {
 		//flujo_del_crudo = Dado por el equilibrio
 		// Grados_API o densidad del liquido = LA DA EL USUARIO O SE CALCULA CON EL EQUILIBRIO
 		// diametro_de_la_particula =DADA POR EL USUARIO;
-
+		
 		//Dimensiones del equipo y condiciones de separación
 		//La presión de operación del primer separador, 
 		//temperatura  de separación
 		//Tamaño de gota a separar
-
-
-
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		//Datos que se deben preguntar al usuario
 		double Porcentaje_de_gas=(Double.parseDouble(JOptionPane.showInputDialog("Ingrese el porcentaje del gas")));
 		double Tamaño_de_gota_a_separar=(Double.parseDouble(JOptionPane.showInputDialog("Tamaño de gota a separar en micrones")));
@@ -89,7 +92,7 @@ public class Separador_bifasico_horizontal {
 		Float Paramtero_B=(float)(3.448+986.4/Temperatura+0.01009*peso_molecular_del_gas);		
 		Float Parametro_C=(float)(2.447-0.2224*Paramtero_B);
 		viscosidad_dinamica_del_gas=(float) (Parametro_A*Math.exp(Paramtero_B*Math.pow((densidad_del_gas*453/Math.pow(30.48,3)),Parametro_C))*1e-4);
-		System.out.println("viscosidad dinámica= "+viscosidad_dinamica_del_gas);
+System.out.println("viscosidad dinámica= "+viscosidad_dinamica_del_gas);
 		//Calculo de la velocidad de asentamiento
 		Float convergencia = (float)1;
 		while (convergencia!= 0) {
@@ -201,6 +204,7 @@ public class Separador_bifasico_horizontal {
 
 						//Variables a imprimir
 						System.out.println( ":D tiempo de residencia= "+tiempo_de_residencia+"    longitud (ft)= "+longitud_real+"	diametro(in)=  "+diametro_real		+ "	    R/D= "+relacion_Long_Diametro+"     T. residencia (min)="+Tiempo_de_residencia_real+"   velocidad del gas(ft/s)="+velocidad_real_del_gas);
+
 					}
 				}
 			}	
@@ -208,5 +212,6 @@ public class Separador_bifasico_horizontal {
 		System.out.println(viscosidad_dinamica_del_gas);
 	}
 }
+
 
 
