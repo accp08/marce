@@ -84,20 +84,18 @@ public class Caracterizacion_crudo {
 
 		// INICIALIZACIÓN PARA PRUEBAS DE ESCRITORIO
 
-		//		Fraccion_molar_crudo_sin_agua[0]=0.2840;
-		//		Fraccion_molar_crudo_sin_agua [1]=0.0716;
-		//		Fraccion_molar_crudo_sin_agua [2]=0.1048;
-		//		Fraccion_molar_crudo_sin_agua [3]=0.042;
-		//		Fraccion_molar_crudo_sin_agua [4]=0.042;
-		//		Fraccion_molar_crudo_sin_agua [5]=0.0191;
-		//		Fraccion_molar_crudo_sin_agua [6]=0.0191;
-		//		Fraccion_molar_crudo_sin_agua [7]=0.0405;
-		//		Fraccion_molar_crudo_sin_agua [22]=0.0164;
-		//		Fraccion_molar_crudo_sin_agua [24]=0.0008;
-		//		Fraccion_molar_crudo_sin_agua [27]=0.3597;
+				Fraccion_molar_crudo_sin_agua[0]=0.2840;
+				Fraccion_molar_crudo_sin_agua [1]=0.0716;
+				Fraccion_molar_crudo_sin_agua [2]=0.1048;
+				Fraccion_molar_crudo_sin_agua [3]=0.042;
+				Fraccion_molar_crudo_sin_agua [4]=0.042;
+				Fraccion_molar_crudo_sin_agua [5]=0.0191;
+				Fraccion_molar_crudo_sin_agua [6]=0.0191;
+				Fraccion_molar_crudo_sin_agua [7]=0.0405;
+				Fraccion_molar_crudo_sin_agua [22]=0.0164;
+				Fraccion_molar_crudo_sin_agua [24]=0.0008;
+				Fraccion_molar_crudo_sin_agua [27]=0.3597;
 
-
-		Fraccion_molar_crudo_sin_agua[7]=1;
 		//=====================================================================================================================================
 
 		// PROPIEDADES CARACTERIZABLES
@@ -130,7 +128,7 @@ public class Caracterizacion_crudo {
 		for(int i=0;i<numero_de_compuestos;i++){
 			Peso_molecular_MW_crudo=Peso_molecular_MW_crudo+Fraccion_molar_crudo_sin_agua[i]*Peso_molecular_liquido[i];
 		}
-		//System.out.println("Peso molecular= "+Peso_molecular_MW_crudo+" lb/ft^3");
+		System.out.println("Peso molecular= "+Peso_molecular_MW_crudo+" lb/ft^3");
 
 		//=====================================================================================================================================		
 
@@ -510,17 +508,31 @@ public class Caracterizacion_crudo {
 
 
 		viscosidad=X_nuevo;
-		Double Viscosidad_del_crudo=(double)Viscosidad_Beal;
+		Double Viscosidad_del_crudo=(double)0;
 		Double Calor_especifico_crudo=(double)0;
 
+		System.out.println(Temperatura_crudo);
+		System.out.println(Grados_API);
+	 
+		Viscosidad_del_crudo=Math.pow((Math.pow(Temperatura_crudo-460,-1.163)*Math.pow(10,3.0324-0.02023*Grados_API)),10)-1;
+
+		
+		System.out.println(Viscosidad_del_crudo+ "del libro equation");
 		//POr el momento se hace la viscosidad = a la de beal pero esta sujeto a modificación.
 		//Se de be determinar el claor especifico del crudo
-		System.out.println("Dead oil viscosity-Beggs=	"+Dead_oil_viscosity_Beggs);
-		System.out.println("viscosidad Chew-Connally=	"+ Viscosidad_Chew_Connally);
-		System.out.println("viscosidad Beggs_Robinson=	"+ Viscosidad_Beggs_Robinson);
-		System.out.println("viscosidad Beal=	"+ Viscosidad_Beal);
-		System.out.println("Viscosidad_Vasquez_Beggs=	"+Viscosidad_Vasquez_Beggs);
-		System.out.println("Viscosidad a partir de la composición=	"+viscosidad);
+//		System.out.println("Dead oil viscosity-Beggs=	"+Dead_oil_viscosity_Beggs);
+//		System.out.println("viscosidad Chew-Connally=	"+ Viscosidad_Chew_Connally);
+//		System.out.println("viscosidad Beggs_Robinson=	"+ Viscosidad_Beggs_Robinson);
+//		System.out.println("viscosidad Beal=	"+ Viscosidad_Beal);
+//		System.out.println("Viscosidad_Vasquez_Beggs=	"+Viscosidad_Vasquez_Beggs);
+//		System.out.println("Viscosidad a partir de la composición=	"+viscosidad);
+		
+		for (int i = 0; i < vector_parametros_ei.length; i++) {
+			if (Fraccion_molar_crudo_sin_agua[i]!=0) {
+				System.out.println(i + "	"+Fraccion_molar_crudo_sin_agua[i]);
+						
+			}
+		}
 
 
 		//==================================================================================================================

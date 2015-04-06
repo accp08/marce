@@ -39,8 +39,8 @@ public class Equilibrio_de_fases_PR {
 		//	1.1)	Variables del sistema; son ingresadas en la pantalla donde se piden los datos para el calculo de equilibrio
 		lista_constantes_calculo_entlpias=Lectura_constantes_calculo_entalpias.carga();
 		lista_de_compuestos = Lectura_HC_Compuestos_Caracterizables.carga();
-		int numero_de_compuestos_no_caracterizables= (int)1;
-		Double Temperatura_alimento =(double)620;
+		int numero_de_compuestos_no_caracterizables= (int)5;
+		Double Temperatura_alimento =(double)580;
 		Double Presion_alimento =(double)4000;
 		Double Composicion []= new Double [lista_de_compuestos.size()+numero_de_compuestos_no_caracterizables];
 
@@ -56,7 +56,7 @@ public class Equilibrio_de_fases_PR {
 		Double Temperatura_vapor =Temperatura_alimento;
 		Double Presion_liquido=Presion_alimento;
 		Double Presion_vapor =Presion_alimento;
-
+ 
 
 
 
@@ -76,22 +76,21 @@ public class Equilibrio_de_fases_PR {
 			Composicion[i]=(double)0;
 		}
 
-		Composicion[0]=0.45;
-		Composicion[1]=0.05;
-		Composicion[2]=0.05;		
-		Composicion[4]=0.03;
-		Composicion[6]=0.01;
-		Composicion[7]=0.01;
-		Composicion[27]=0.4;
-
-		//		Composicion[0]=0.86;
-		//		Composicion[1]=0.05;
-		//		Composicion[2]=0.05;		
-		//		Composicion[4]=0.02;
-		//		Composicion[6]=0.01;
-		//		Composicion[7]=0.005;
-		//		Composicion[27]=0.005;
-
+		Composicion[22]=0.78;
+		Composicion[24]=0.05;
+		Composicion[0]=33.86;
+		Composicion[1]=5.63;
+		Composicion[2]=4.4;
+		Composicion[3]=1.21;
+		Composicion[4]=3.42;
+		Composicion[5]=1.85;
+		Composicion[6]=2.44;
+		Composicion[7]=4.29;
+		Composicion[27]=9.96;
+		Composicion[28]=7.14;
+		Composicion[29]=6.11;
+		Composicion[30]=5.44;
+		Composicion[31]=13.42;
 
 
 		for (int i = 0; i < Composicion.length; i++) {
@@ -107,6 +106,8 @@ public class Equilibrio_de_fases_PR {
 		double [] T_criticas_no_caracterizables=new double [numero_de_compuestos_no_caracterizables];
 		double [] P_criticas_no_caracterizables=new double [numero_de_compuestos_no_caracterizables];
 		double [] V_criticos_no_caracterizables=new double [numero_de_compuestos_no_caracterizables];
+		double [] Punto_ebullicion_estandar_no_cracterizables=new double[numero_de_compuestos_no_caracterizables];
+		double [] Densidad_no_caracterizables=new double[numero_de_compuestos_no_caracterizables];
 		double []Factor_acentrico_w_no_caracterizables = new double [numero_de_compuestos_no_caracterizables];
 		double [] Peso_molecular_MW_no_caracterizables=new double [numero_de_compuestos_no_caracterizables];
 		double [] Parametro_m_caracterizables = new double [numero_de_compuestos];
@@ -139,13 +140,58 @@ public class Equilibrio_de_fases_PR {
 		}
 		//OJO!! ESTA MATRIZ SE DEBE LLENAR CON LOS DATOS PROVENIENTES DE LA CARACTERIZACIÓN DE LOS PSEUDOCOMPONENTES.
 		for (int i=0; i<numero_de_compuestos_no_caracterizables;i++){
-			T_criticas_no_caracterizables [i] =(double)1160;
-			P_criticas_no_caracterizables [i]=(double)285;
-			V_criticos_no_caracterizables [i]=(double)2.37073211055279;
-			Factor_acentrico_w_no_caracterizables [i] =(double)0.52;
-			Peso_molecular_MW_no_caracterizables[i]=215;
+//			T_criticas_no_caracterizables [i] =(double)1160;
+//			P_criticas_no_caracterizables [i]=(double)285;
+//			V_criticos_no_caracterizables [i]=(double)2.37073211055279;
+//			Factor_acentrico_w_no_caracterizables [i] =(double)0.52;
+//			Peso_molecular_MW_no_caracterizables[i]=215;
+		
 		}
 
+		Punto_ebullicion_estandar_no_cracterizables[0]=247.999989013672;
+		Punto_ebullicion_estandar_no_cracterizables[1]=339.999995117188;
+		Punto_ebullicion_estandar_no_cracterizables[2]=413.000025634766;
+		Punto_ebullicion_estandar_no_cracterizables[3]=471.999958496094;
+		Punto_ebullicion_estandar_no_cracterizables[4]=656.999946289063;
+
+		Punto_ebullicion_estandar_no_cracterizables[0]=110;
+		Punto_ebullicion_estandar_no_cracterizables[1]=141;
+		Punto_ebullicion_estandar_no_cracterizables[2]=170;
+		Punto_ebullicion_estandar_no_cracterizables[3]=195;
+		Punto_ebullicion_estandar_no_cracterizables[4]=336;
+
+		T_criticas_no_caracterizables [0]=573.00001953125;
+		T_criticas_no_caracterizables [1]=672.999995117188;
+		T_criticas_no_caracterizables [2]=749.999982910156;
+		T_criticas_no_caracterizables [3]=807.00001953125;
+		T_criticas_no_caracterizables [4]=974.999982910156;
+
+		P_criticas_no_caracterizables [0]=441.999982897559;
+		P_criticas_no_caracterizables [1]=369.999989689087;
+		P_criticas_no_caracterizables [2]=350.000013214819;
+		P_criticas_no_caracterizables [3]=295.000007091394;
+		P_criticas_no_caracterizables [4]=220.000006788904;
+
+		V_criticos_no_caracterizables [0]=6.90527232515276;
+		V_criticos_no_caracterizables [1]=8.58046592539072;
+		V_criticos_no_caracterizables [2]=10.0225680111635;
+		V_criticos_no_caracterizables [3]=11.2785682926905;
+		V_criticos_no_caracterizables [4]=15.5925675051808;
+
+		Densidad_no_caracterizables[0]=47.4744211953125;
+		Densidad_no_caracterizables[1]=49.405795065918;
+		Densidad_no_caracterizables[2]=50.9010531164551;
+		Densidad_no_caracterizables[3]=52.0224937966309;
+		Densidad_no_caracterizables[4]=55.2622189377441;
+
+		Factor_acentrico_w_no_caracterizables[0]=0.375785112380981;
+		Factor_acentrico_w_no_caracterizables[1]=0.443636506795883;
+		Factor_acentrico_w_no_caracterizables[2]=0.535724818706512;
+		Factor_acentrico_w_no_caracterizables[3]=0.565597891807556;
+		Factor_acentrico_w_no_caracterizables[4]=0.807937860488892;
+
+		
+		
 		// 2.7)		Calculo de los parámetros a, b y m para compuestos caracterizables y no caracterizables.
 		for (int i=0; i<(lista_de_compuestos.size());i++){
 			Parametro_a_caracterizables [i]= Parametro_omega_a_PR*Math.pow(Constante_gas_ideal_R,2)*Math.pow(T_criticas_caracterizables[i],2)/P_criticas_caracterizables[i];
