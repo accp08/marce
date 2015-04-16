@@ -168,6 +168,8 @@ exterior:
         raicesComplejas[3]=new Calculo_de_raices_complejos(u2, -v2);
     }
 
+    
+    
     private boolean cambiaSigno(int j){
         double logaritmo;
         for(int k=2; k<=m; k++){
